@@ -29,11 +29,12 @@
 
 - name: daemon-reload VictoriaMetrics service
   become: true
-  notify: Restart VictoriaMetrics service
+#  notify: Restart VictoriaMetrics service
   systemd:
     daemon_reload: true
     name: victoriametrics
-  when: config_template is changed
+    state: restarted
+#  when: config_template is changed
 
 - name: Ensure VictoriaMetrics service is enabled on boot
   become: true

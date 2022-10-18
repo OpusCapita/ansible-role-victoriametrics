@@ -22,6 +22,25 @@
     state: directory
     mode: 0755
 
+- name: Ensure existence of VictoriaMetrics scrape directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: victoriametrics
+    group: victoriametrics
+    mode: 0770
+  with_items:
+    - "{{ victoriametrics_scrape_dir }}"
+
+- name: Copy scrape file to scrape directory
+  template:
+    src: "{{ victoriametrics_scrape_file }}"
+    dest: "{{ victoriametrics_scrape_dir }}/prometheus.yml"
+    force: true
+    owner: victoriametrics
+    group: victoriametrics
+    mode: 0640
+
 - name: Ensure existense of VictoriaMetrics storage directory
   file:
     path: "{{ victoriametrics_data_dir }}"
